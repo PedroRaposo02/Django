@@ -1,0 +1,17 @@
+{% load static %}
+<link rel="stylesheet" href={% static 'polls/style.css' %}>
+<div class="create-question-form-container">
+  {% block content %}
+    <h1 class="create-question-h1">Create a new question</h1>
+    <form method="post" class="create-question-form">
+      {% csrf_token %}
+      {{ form.as_p }}
+      <h2 class="create-question-h2">Choices</h2>
+      {{ choices.management_form }}
+      <div>
+        {% for choice in choices %}{{ choice.as_p }}{% endfor %}
+      </div>
+      <button class="question-submit" type="submit">Save question</button>
+    </form>
+  {% endblock content %}
+</div>
