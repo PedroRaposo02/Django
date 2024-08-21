@@ -1,25 +1,28 @@
+{% extends "base.html" %}
+
 {% load static %}
-<link rel="stylesheet" href={% static 'polls/style.css' %}>
-<ul>
+{% block content %}
+<div class="list-group">
   {% if latest_question_list %}
     {% for question in latest_question_list %}
-      <li>
-        <a href="{% url 'polls:detail' question.id %}">{{ question.question_text }}</a>
-        <a class="delete-button"
-           type="button"
+      <div class="list-group-item d-flex justify-content-between align-items-center">
+        <a href="{% url 'polls:detail' question.id %}" class="text-decoration-none">{{ question.question_text }}</a>
+        <a class="btn btn-danger btn-sm"
            href="{% url 'polls:delete' question.id %}"
-           method="post">
-          <svg xmlns="http://www.w3.org/2000/svg"
+           method="POST">
+            <svg xmlns="http://www.w3.org/2000/svg"
                width="24"
                height="24"
-               viewBox="0 0 24 24">
+               viewBox="0 0 24 24"
+               fill="white">
             <path d="M3 6v18h18v-18h-18zm5 14c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm5 0c0 .552-.448 1-1 1s-1-.448-1-1v-10c0-.552.448-1 1-1s1 .448 1 1v10zm4-18v2h-20v-2h5.711c.9 0 1.631-1.099 1.631-2h5.315c0 .901.73 2 1.631 2h5.712z" />
-          </svg>
+            </svg>
         </a>
-      </li>
+      </div>
     {% endfor %}
   {% else %}
-    <p>No polls are available.</p>
+    <p class="text-muted">No polls are available.</p>
   {% endif %}
-  <a class="create-button" type="button" href={% url "polls:create" %}>Create a Question</a>
-</ul>
+</div>
+<a class="btn btn-primary mt-3" href={% url "polls:create" %}>Create a Question</a>
+{% endblock content %}

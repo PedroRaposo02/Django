@@ -1,14 +1,17 @@
-{% load static %}
-
-<h1>{{ question.question_text }}</h1>
-<ul>
-  {% for choice in question.choice_set.all %}
-    <li>{{ choice.choice_text }} -- {{ choice.votes }} vote{{ choice.votes|pluralize }}</li>
-  {% endfor %}
-</ul>
-<a href="{% url "polls:detail" question.id %}">Vote again?</a>
-<br />
-<a href={% url "polls:index" %}>Return to main page</a>
-<br />
-
-<img src="{% static 'polls/images/SilcoTheRAT.jpeg' %}" alt="SILKO the goat" width="200px" height="200px"/>
+{% extends "base.html" %}
+{% block content %}
+  <div class="container mt-5">
+    <h1 class="mb-4">{{ question.question_text }}</h1>
+    <ul class="list-group mb-4">
+      {% for choice in question.choice_set.all %}
+        <li class="list-group-item d-flex justify-content-between align-items-center">
+          {{ choice.choice_text }}
+          <span class="badge bg-primary rounded-pill">{{ choice.votes }} vote{{ choice.votes|pluralize }}</span>
+        </li>
+      {% endfor %}
+    </ul>
+    <a href="{% url "polls:detail" question.id %}"
+       class="btn btn-secondary mb-2">Vote again?</a>
+    <a href="{% url "polls:index" %}" class="btn btn-link">Return to main page</a>
+  </div>
+{% endblock content %}
