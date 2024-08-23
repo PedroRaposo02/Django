@@ -1,0 +1,37 @@
+services:
+  db:
+    image: postgres:13
+    container_name: django_polls_db
+    volumes:
+      - db_data:/var/lib/postgresql/data
+    environment:
+      - POSTGRES_DB=PollsDB
+      - POSTGRES_USER=PollsUser
+      - POSTGRES_PASSWORD=PollsPass
+    healthcheck:
+      test: ["CMD-SHELL", "pg_isready -U PollsUser -d PollsDB"]
+      interval: 3s
+      timeout: 3s
+      retries: 5
+
+  
+  polls:
+    container_name: django_polls_tutorial
+    build: .
+    # command: gunicorn tutorial.wsgi:application --bind 0.0.0.0:8000
+    command: python manage.py runserver 0.0.0.0:8000
+    entrypoint: /app/entrypoint.sh
+    ports:
+      - "8000:8000"
+    volumes:
+      - .:/app
+    depends_on:
+      db:
+        condition: service_healthy
+    environment:
+      - DATABASE_URL=postgres://PollsUser:PollsPass@db:5432/PollsDB
+      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+
+volumes:
+  db_data:
+  static:

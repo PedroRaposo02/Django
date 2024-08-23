@@ -1,3 +1,0 @@
-django
-djlint
-django-debug-toolbar

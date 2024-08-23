@@ -1,0 +1,17 @@
+## Ignore Dockerfile and Docker-related files
+Dockerfile
+docker-compose.yml
+
+# Ignore SQLite database file
+db.sqlite3
+
+# Ignore media and static directories
+mediafiles
+staticfiles
+
+# Ignore development-related files
+README.md
+*.md
+
+# Ignore local configuration
+.env
