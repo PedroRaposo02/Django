@@ -7,21 +7,20 @@ WORKDIR /app
 # set environment variables
 ENV PYTHONDONTWRITEBYTECODE 1
 ENV PYTHONUNBUFFERED 1
+
 ENV ENVIRONMENT production
+ENV DJANGO_SECRET_KEY ${DJANGO_SECRET_KEY:-some_secret_key_1234}
 
 # Copy the requirements file to the container
 COPY requirements.txt .
 
 # Install the dependencies
 RUN pip install --no-cache-dir -r requirements.txt
-# RUN pip install gunicorn==20.1.0
 
 # Copy the rest of the application code to the container
 COPY . .
 
-# Expose the port the app runs on
-EXPOSE 8000
+# Copy the entrypoint script into the container
+COPY entrypoint.sh /entrypoint.sh
 
-# Run the application using Gunicorn (overridden by Docker Compose)
-# CMD ["gunicorn", "tutorial.wsgi:application", "--bind", "0.0.0.0:8000"]
-CMD ["python", "manage.py", "runserver", "0.0.0.0:8000"]
+ENTRYPOINT [ "sh", "/entrypoint.sh" ]

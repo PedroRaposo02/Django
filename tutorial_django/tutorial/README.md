@@ -11,10 +11,7 @@ This README provides instructions on how to install this Django tutorial project
   - On Windows: `.\env\Scripts\activate`
   - On macOS/Linux: `source env/bin/activate`
 5. Install the project dependencies: `pip install -r requirements.txt`.
-
-## Project Structure
-
-The Django tutorial project consists of the following components:
+6. Run the project with docker: `docker-compose up`.
 
 - `polls` app: This app is a part of the tutorial project and serves as an example for building a simple polling application.
 - `manage.py`: This file is used to interact with various Django commands.
@@ -29,3 +26,12 @@ To run the project, follow these steps:
   - On macOS/Linux: `source env/bin/activate`
 4. Run the Django development server: `python manage.py runserver`.
 5. Open your web browser and visit `http://localhost:8000/` to access the project.
+
+To run the project with docker, follow these steps:
+
+1. Open a terminal or command prompt.
+2. Run the following command:
+  docker compose up --build -d --force-recreate
+3. Open your web browser and visit `http://localhost:8000/` to access the project.
+4. To restart the container from 0 before the previous command run this command:
+  docker compose down -v

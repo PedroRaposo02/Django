@@ -13,25 +13,30 @@ services:
       interval: 3s
       timeout: 3s
       retries: 5
-
   
   polls:
     container_name: django_polls_tutorial
-    build: .
-    # command: gunicorn tutorial.wsgi:application --bind 0.0.0.0:8000
-    command: python manage.py runserver 0.0.0.0:8000
-    entrypoint: /app/entrypoint.sh
+    build: ./tutorial
     ports:
       - "8000:8000"
     volumes:
-      - .:/app
+      - staticfiles:/app/staticfiles
     depends_on:
       db:
         condition: service_healthy
     environment:
       - DATABASE_URL=postgres://PollsUser:PollsPass@db:5432/PollsDB
-      - DJANGO_SECRET_KEY=${DJANGO_SECRET_KEY}
+
+  nginx:
+    container_name: django_polls_nginx
+    build: ./nginx
+    volumes:
+      - staticfiles:/static
+    ports:
+      - "80:80"
+    depends_on:
+      - polls
 
 volumes:
   db_data:
-  static:
+  staticfiles:

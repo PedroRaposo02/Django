@@ -3,3 +3,4 @@ djlint
 django-debug-toolbar
 dj_database_url
 psycopg2-binary
+gunicorn
