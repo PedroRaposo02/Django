@@ -20,10 +20,7 @@ RUN pip install --no-cache-dir -r requirements.txt
 # Copy the rest of the application code to the container
 COPY . .
 
-# EXPOSE 8000
-
 # Copy the entrypoint script into the container
 COPY entrypoint.sh /entrypoint.sh
 
 ENTRYPOINT [ "sh", "/entrypoint.sh" ]
-# CMD [ "python", "manage.py", "runserver", "0:8000"]
